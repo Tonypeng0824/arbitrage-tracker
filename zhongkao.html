@@ -51,6 +51,25 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Micr
     <p>基于真实数据的智能志愿方案生成工具</p>
   </div>
 
+  <!-- AI交互入口 -->
+  <div style="background:linear-gradient(135deg,#059669,#0d9488);border-radius:14px;padding:24px 28px;margin-bottom:28px;color:white;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px">
+    <div>
+      <h3 style="font-size:1.15em;margin-bottom:4px">🤖 AI 智能填报入口</h3>
+      <p style="opacity:0.9;font-size:0.9em">填入成绩 → 智谱AI分析 → 秒出冲/稳/保方案</p>
+    </div>
+    <a href="ZHONGKAO_VERCEL_URL" id="aiEntryBtn" style="background:white;color:#059669;padding:12px 28px;border-radius:10px;font-weight:700;font-size:1em;text-decoration:none;white-space:nowrap;transition:all 0.2s">开始智能填报 →</a>
+  </div>
+  <script>
+    // 部署Vercel后替换为实际URL
+    var btn = document.getElementById('aiEntryBtn');
+    if (btn.href === 'ZHONGKAO_VERCEL_URL' || btn.href.includes('ZHONGKAO_VERCEL_URL')) {
+      btn.style.opacity = '0.6';
+      btn.textContent = '即将上线 →';
+      btn.href = '#';
+      btn.onclick = function(e){ e.preventDefault(); alert('AI交互填报功能即将上线！\n\n如需体验，请先部署Vercel项目。\n详情见 vercel-zhongkao 目录。'); };
+    }
+  </script>
+
   <div class="cards">
     <div class="card">
       <h3>🏫 数据覆盖</h3>
