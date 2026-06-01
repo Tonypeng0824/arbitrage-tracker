@@ -3,134 +3,406 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>杭州中考志愿填报顾问 - 数智工具箱</title>
+<title>杭州中考志愿智能填报 - 数智工具箱</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;background:#f0f4f8;color:#1e293b;line-height:1.6}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;background:linear-gradient(135deg,#f0fdf4 0%,#ecfeff 50%,#eff6ff 100%);color:#1e293b;line-height:1.6;min-height:100vh}
 .nav{background:white;padding:14px 20px;box-shadow:0 1px 3px rgba(0,0,0,0.04);border-bottom:1px solid #e2e8f0;display:flex;align-items:center;gap:16px}
 .nav a{color:#2563eb;text-decoration:none;font-weight:500;font-size:0.9em}
-.nav a:hover{text-decoration:underline}
-.nav .sep{color:#cbd5e1}
-.container{max-width:900px;margin:0 auto;padding:40px 20px}
-.header{text-align:center;margin-bottom:40px}
-.header h1{font-size:2.2em;font-weight:800;color:#0f172a;margin-bottom:8px}
-.header p{color:#64748b;font-size:1.05em}
-.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:20px;margin-bottom:40px}
-.card{background:white;border-radius:14px;padding:24px;box-shadow:0 1px 3px rgba(0,0,0,0.04);border:1px solid #f1f5f9}
-.card h3{font-size:1.05em;margin-bottom:8px;color:#0f172a}
-.card .num{font-size:2em;font-weight:800;color:#059669;margin:8px 0}
-.card .sub{font-size:0.85em;color:#64748b}
-.feature{background:white;border-radius:14px;padding:28px;box-shadow:0 1px 3px rgba(0,0,0,0.04);border:1px solid #f1f5f9;margin-bottom:20px}
-.feature h3{font-size:1.1em;margin-bottom:12px;color:#0f172a}
-.feature ul{list-style:none;padding:0}
-.feature li{padding:6px 0;font-size:0.9em;color:#475569;display:flex;align-items:flex-start;gap:8px}
-.feature li::before{content:'✅';flex-shrink:0}
-.data-table{width:100%;border-collapse:collapse;margin:16px 0;font-size:0.9em}
-.data-table th{background:#f8fafc;padding:10px 12px;text-align:left;font-weight:600;color:#475569;border-bottom:2px solid #e2e8f0}
-.data-table td{padding:10px 12px;border-bottom:1px solid #f1f5f9;color:#1e293b}
-.highlight{background:linear-gradient(135deg,#f0fdf4,#ecfeff);border:1px solid #a7f3d0;border-radius:14px;padding:24px;margin-bottom:20px}
-.highlight h3{color:#059669;margin-bottom:8px}
-.highlight p{color:#475569;font-size:0.9em}
-.badge{display:inline-block;padding:3px 10px;border-radius:6px;font-size:0.78em;font-weight:600;margin-right:6px}
-.badge-green{background:#f0fdf4;color:#059669}
-.badge-blue{background:#eff6ff;color:#2563eb}
-.footer{text-align:center;padding:40px 20px;color:#94a3b8;font-size:0.85em;border-top:1px solid #e2e8f0;margin-top:40px}
+.container{max-width:840px;margin:0 auto;padding:30px 20px}
+.header{text-align:center;margin-bottom:30px}
+.header h1{font-size:2em;font-weight:800;color:#0f172a;margin-bottom:6px}
+.header p{color:#64748b}
+.form-card{background:white;border-radius:16px;padding:32px;box-shadow:0 4px 24px rgba(0,0,0,0.06);border:1px solid #f1f5f9;margin-bottom:24px}
+.form-card h2{font-size:1.15em;margin-bottom:16px;color:#0f172a;display:flex;align-items:center;gap:8px}
+.section-label{font-size:0.95em;font-weight:700;color:#059669;margin:20px 0 12px;padding-bottom:6px;border-bottom:2px solid #f0fdf4}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:8px}
+.form-group{margin-bottom:14px}
+.form-group label{display:block;font-size:0.84em;font-weight:600;color:#475569;margin-bottom:5px}
+.form-group label .opt{font-weight:400;color:#94a3b8;font-size:0.9em}
+.form-group input,.form-group textarea,.form-group select{width:100%;padding:11px 14px;border:2px solid #e2e8f0;border-radius:10px;font-size:0.93em;transition:border-color 0.2s;background:#f8fafc}
+.form-group input:focus,.form-group textarea:focus,.form-group select:focus{border-color:#059669;outline:none;background:white}
+.form-group textarea{resize:vertical;min-height:60px}
+.form-group .hint{font-size:0.75em;color:#94a3b8;margin-top:3px}
+.optional-section{background:#fafbfc;border:1px dashed #e2e8f0;border-radius:12px;padding:20px;margin-top:16px}
+.optional-section summary{font-weight:600;color:#64748b;cursor:pointer;font-size:0.93em;padding:4px 0}
+.optional-section summary:hover{color:#059669}
+.optional-section[open] summary{margin-bottom:12px}
+.btn-submit{width:100%;padding:14px;background:linear-gradient(135deg,#059669,#0d9488);color:white;border:none;border-radius:12px;font-size:1.1em;font-weight:700;cursor:pointer;transition:all 0.3s;margin-top:8px}
+.btn-submit:hover{transform:translateY(-1px);box-shadow:0 8px 24px rgba(5,150,105,0.3)}
+.btn-submit:disabled{opacity:0.6;cursor:not-allowed;transform:none}
+.result-card{background:white;border-radius:16px;padding:32px;box-shadow:0 4px 24px rgba(0,0,0,0.06);border:1px solid #f1f5f9;display:none;line-height:1.8}
+.result-card h2{font-size:1.3em;margin-bottom:16px;color:#059669}
+.result-content{font-size:0.95em;color:#334155}
+.result-content h3{color:#0f172a;margin:16px 0 8px;font-size:1.05em}
+.result-content table{width:100%;border-collapse:collapse;margin:12px 0;font-size:0.9em}
+.result-content td,.result-content th{border:1px solid #e2e8f0;padding:8px 12px;text-align:left}
+.result-content th{background:#f0fdf4;font-weight:600}
+.loading{display:none;text-align:center;padding:40px}
+.loading .spinner{width:48px;height:48px;border:4px solid #e2e8f0;border-top-color:#059669;border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 16px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading p{color:#64748b;font-size:0.95em}
+.error{background:#fef2f2;color:#dc2626;padding:16px;border-radius:10px;margin-bottom:16px;display:none}
+.info-bar{background:white;border-radius:12px;padding:16px 20px;margin-bottom:24px;box-shadow:0 1px 3px rgba(0,0,0,0.04);border:1px solid #f1f5f9;display:flex;align-items:center;gap:10px;font-size:0.88em;color:#475569}
+.info-bar .dot{width:8px;height:8px;background:#22c55e;border-radius:50%;flex-shrink:0}
+.footer{text-align:center;padding:40px 20px;color:#94a3b8;font-size:0.85em}
 .footer a{color:#64748b;text-decoration:none}
+@media(max-width:640px){.form-row{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 <div class="nav">
-  <a href="index.html">← 返回首页</a>
-  <span class="sep">|</span>
-  <span style="color:#64748b;font-size:0.9em">杭州中考志愿填报顾问</span>
+  <span style="color:#64748b;font-size:0.9em">🎓 杭州中考志愿智能填报</span>
 </div>
 
 <div class="container">
   <div class="header">
-    <h1>🎓 杭州中考志愿填报顾问</h1>
-    <p>基于真实数据的智能志愿方案生成工具</p>
+    <h1>🎓 中考志愿智能填报</h1>
+    <p>填入成绩 → AI深度分析 → 生成冲/稳/保志愿方案</p>
   </div>
 
-  <!-- AI交互入口 -->
-  <div style="background:linear-gradient(135deg,#059669,#0d9488);border-radius:14px;padding:24px 28px;margin-bottom:28px;color:white;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px">
-    <div>
-      <h3 style="font-size:1.15em;margin-bottom:4px">🤖 AI 智能填报入口</h3>
-      <p style="opacity:0.9;font-size:0.9em">填入成绩 → 智谱AI分析 → 秒出冲/稳/保方案</p>
+  <div class="info-bar">
+    <div class="dot"></div>
+    <span>基于智谱AI GLM-4-Flash · 2026年杭州中考预测 · 分配生政策评估 · 个性化填报策略</span>
+  </div>
+
+  <div class="form-card">
+    <h2>📝 基本信息</h2>
+    <div class="form-row">
+      <div class="form-group">
+        <label>昵称 <span class="opt">(选填)</span></label>
+        <input type="text" id="nickname" placeholder="如：小明">
+      </div>
+      <div class="form-group">
+        <label>杭州地区所在中学名称 <span style="color:#dc2626">*</span></label>
+        <input type="text" id="schoolName" placeholder="如：杭州市十三中教育集团" required>
+        <div class="hint">用于评估该校分配生配额及历年录取情况</div>
+      </div>
     </div>
-    <a href="https://vercel-zhongkao.vercel.app" id="aiEntryBtn" target="_blank" style="background:white;color:#059669;padding:12px 28px;border-radius:10px;font-weight:700;font-size:1em;text-decoration:none;white-space:nowrap;transition:all 0.2s">开始智能填报 →</a>
-  </div>
-  <div class="cards">
-    <div class="card">
-      <h3>🏫 数据覆盖</h3>
-      <div class="num">20+</div>
-      <div class="sub">监控公众号 & 数据源</div>
+
+    <div class="section-label">📊 一模成绩</div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>一模成绩（分）<span style="color:#dc2626">*</span></label>
+        <input type="number" id="mock1Score" placeholder="如：568" step="0.1" required>
+      </div>
+      <div class="form-group">
+        <label>一模年排 <span class="opt">(选填)</span></label>
+        <input type="number" id="mock1Rank" placeholder="如：120">
+        <div class="hint">年级排名，用于分配生资格评估</div>
+      </div>
     </div>
-    <div class="card">
-      <h3>📊 数据库规模</h3>
-      <div class="num">7张表</div>
-      <div class="sub">SQLite 中考数据库</div>
+
+    <div class="section-label">📊 二模成绩</div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>二模成绩（分）<span style="color:#dc2626">*</span></label>
+        <input type="number" id="mock2Score" placeholder="如：576.5" step="0.1" required>
+      </div>
+      <div class="form-group">
+        <label>二模年排 <span class="opt">(选填)</span></label>
+        <input type="number" id="mock2Rank" placeholder="如：76">
+        <div class="hint">年级排名，用于分配生资格评估</div>
+      </div>
     </div>
-    <div class="card">
-      <h3>📝 已生成方案</h3>
-      <div class="num">3份</div>
-      <div class="sub">二模成绩志愿方案</div>
+
+    <div class="section-label">🏠 志愿偏好</div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>目标学校/偏好 <span class="opt">(选填)</span></label>
+        <textarea id="targets" placeholder="如：想冲杭二中，理科强，希望校风好"></textarea>
+      </div>
+      <div class="form-group">
+        <label>家庭地址 <span class="opt">(选填)</span></label>
+        <input type="text" id="homeAddress" placeholder="如：西湖区文三路XX小区">
+        <div class="hint">用于评估通勤距离和就近学校推荐</div>
+      </div>
     </div>
-    <div class="card">
-      <h3>🎯 预测准确</h3>
-      <div class="num">2026</div>
-      <div class="sub">一段线567分 | 重高线622分</div>
+    <div class="form-group">
+      <label>是否住校</label>
+      <select id="boarding">
+        <option value="不限">不限</option>
+        <option value="是">希望住校</option>
+        <option value="否">希望走读（不住校）</option>
+      </select>
+    </div>
+
+    <details class="optional-section">
+      <summary>📋 补充成绩（选填，填写越多分析越精准）</summary>
+      <div class="form-row">
+        <div class="form-group">
+          <label>八下期末成绩（分）</label>
+          <input type="number" id="grade8bScore" placeholder="如：545" step="0.1">
+        </div>
+        <div class="form-group">
+          <label>八下年排</label>
+          <input type="number" id="grade8bRank" placeholder="如：150">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>九上期末成绩（分）</label>
+          <input type="number" id="grade9aScore" placeholder="如：560" step="0.1">
+        </div>
+        <div class="form-group">
+          <label>九上年排</label>
+          <input type="number" id="grade9aRank" placeholder="如：100">
+        </div>
+      </div>
+    </details>
+
+    <button class="btn-submit" id="submitBtn" onclick="generatePlan()">
+      🤖 AI 生成志愿方案
+    </button>
+  </div>
+
+  <div class="error" id="errorBox"></div>
+
+  <div class="loading" id="loadingBox">
+    <div class="spinner"></div>
+    <p>AI 正在综合分析你的成绩趋势...</p>
+    <p style="font-size:0.82em;color:#94a3b8">预计需要 8-15 秒</p>
+  </div>
+
+  <div class="result-card" id="resultBox">
+    <h2>📋 AI 个性化志愿方案</h2>
+    <div class="result-content" id="resultContent"></div>
+    <div style="margin-top:20px;padding-top:16px;border-top:1px solid #e2e8f0;font-size:0.8em;color:#94a3b8">
+      ⚠️ 本方案由AI生成，仅供参考。实际志愿填报请咨询学校老师，结合官方政策和最新数据。
     </div>
   </div>
-
-  <div class="feature">
-    <h3>📋 系统功能</h3>
-    <ul>
-      <li>分配生资格自动评估（基于嘉绿苑中学460人学籍数据）</li>
-      <li>冲/稳/保志愿方案智能生成</li>
-      <li>2025年高中录取分数线数据库（含新增4所县中）</li>
-      <li>中本一体化（ZBTI）分数线趋势预测</li>
-      <li>B站/B站视频内容分析（浙江甄心升学等UP主）</li>
-      <li>一模二模成绩与区排名对比分析</li>
-    </ul>
-  </div>
-
-  <div class="highlight">
-    <h3>📈 2026年杭州中考关键预测</h3>
-    <table class="data-table">
-      <tr><th>指标</th><th>预测值</th><th>说明</th></tr>
-      <tr><td>一段线</td><td><strong>567分</strong></td><td>较2025年微调</td></tr>
-      <tr><td>重高线</td><td><strong>622分</strong></td><td>保持高位</td></tr>
-      <tr><td>新增招生</td><td><strong>4所县中</strong></td><td>面向主城区招生</td></tr>
-      <tr><td>中本一体化(ZBTI)</td><td><strong>+3~+8分</strong></td><td>热度持续上升</td></tr>
-    </table>
-  </div>
-
-  <div class="feature">
-    <h3>🎯 已生成的志愿方案案例</h3>
-    <table class="data-table">
-      <tr><th>学生</th><th>二模成绩</th><th>区排名</th><th>分配生</th><th>方案类型</th></tr>
-      <tr><td>思瑜</td><td>576.5分</td><td>76名</td><td><span class="badge badge-green">有希望</span></td><td>冲重高+稳优高</td></tr>
-      <tr><td>思泉</td><td>530分</td><td>221名</td><td><span class="badge" style="background:#fef2f2;color:#dc2626">概率为零</span></td><td>稳优高+保底</td></tr>
-      <tr><td>本人</td><td>—</td><td>70名</td><td><span class="badge badge-blue">排名提升</span></td><td>进攻型策略</td></tr>
-    </table>
-  </div>
-
-  <div class="feature">
-    <h3>📡 数据来源</h3>
-    <ul>
-      <li>杭州教育发布、小雨爸爸等20+微信公众号</li>
-      <li>B站UP主「浙江甄心升学」视频内容分析</li>
-      <li>2025年高中录取分数线官方数据</li>
-      <li>嘉绿苑中学学籍数据（460人）</li>
-      <li>杭州市教育局分配生政策文件</li>
-    </ul>
-  </div>
-
 </div>
 
 <div class="footer">
-  <p><a href="index.html">← 返回数智工具箱首页</a></p>
-  <p style="margin-top:8px">数据仅供参考，实际志愿填报请咨询学校老师</p>
+  <p>Powered by 智谱AI GLM-4-Flash · 2026年杭州中考数据分析 · 每日00:00额度重置</p>
 </div>
+
+<script>
+// ==================== 配置 ====================
+const ZHIPU_KEY = 'd66eba51f54e4211aed6f9af217ca122.pKK63AJ6GVVRN4xk';
+const ZHIPU_URL = 'https://open.bigmodel.cn/api/paas/v4/chat/completions';
+
+// CORS 代理列表（按优先级尝试）
+const CORS_PROXIES = [
+    'https://api.allorigins.win/raw?url=',
+    'https://corsproxy.io/?',
+    'https://cors-anywhere.herokuapp.com/',
+];
+
+// ==================== 构建Prompt ====================
+function buildPrompt(data) {
+    const { nickname, schoolName, mock1Score, mock1Rank, mock2Score, mock2Rank,
+            targets, homeAddress, boarding, grade8bScore, grade8bRank,
+            grade9aScore, grade9aRank } = data;
+
+    let p = '请为以下学生做杭州中考志愿综合分析：\n\n';
+    p += '【基本信息】\n';
+    if (nickname) p += `- 昵称：${nickname}\n`;
+    p += `- 所在中学：${schoolName}\n`;
+    p += `- 住校偏好：${boarding || '不限'}\n`;
+    if (homeAddress) p += `- 家庭地址：${homeAddress}\n`;
+
+    p += '\n【成绩数据】\n';
+    if (mock1Score) {
+        p += `- 一模：${mock1Score}分`;
+        if (mock1Rank) p += `，年级第${mock1Rank}名`;
+        p += '\n';
+    }
+    if (mock2Score) {
+        p += `- 二模：${mock2Score}分`;
+        if (mock2Rank) p += `，年级第${mock2Rank}名`;
+        p += '\n';
+    }
+    if (mock1Score && mock2Score) {
+        const diff = (mock2Score - mock1Score).toFixed(1);
+        p += `- 一模→二模趋势：${diff > 0 ? '上涨'+diff+'分' : diff < 0 ? '下降'+Math.abs(diff)+'分' : '持平'}\n`;
+    }
+
+    if (grade8bScore || grade9aScore) {
+        p += '\n【历史成绩】\n';
+        if (grade8bScore) { p += `- 八下期末：${grade8bScore}分`; if (grade8bRank) p += `，年排${grade8bRank}`; p += '\n'; }
+        if (grade9aScore) { p += `- 九上期末：${grade9aScore}分`; if (grade9aRank) p += `，年排${grade9aRank}`; p += '\n'; }
+    }
+
+    if (targets) { p += `\n【目标偏好】\n- ${targets}\n`; }
+
+    p += '\n【2026年杭州中考参考线】\n';
+    p += '- 一段线预测：567分\n- 重高线预测：622分\n- 分配生比例：约17%\n';
+    p += '- 新增4所县中面向主城区招生\n- 中本一体化(ZBTI)分数线涨幅+3~+8分\n';
+
+    p += '\n请按以下结构输出志愿方案：\n';
+    p += '1. 📊 成绩定位与趋势分析\n';
+    p += `2. 🎯 分配生资格评估（基于${schoolName}情况）\n`;
+    p += '3. 🏫 冲-稳-保 三梯度志愿推荐（表格形式，含学校名+推荐理由+分数匹配度';
+    if (homeAddress || boarding !== '不限') p += '+通勤/住校匹配';
+    p += '）\n';
+    if (homeAddress) p += '4. 🏠 就近学校推荐\n';
+    p += `${homeAddress ? '5' : '4'}. ⚠️ 注意事项与填报策略\n`;
+
+    return p;
+}
+
+// ==================== 调用智谱API ====================
+async function callZhipu(prompt) {
+    // 优先尝试直连（智谱API对CORS可能友好）
+    try {
+        const resp = await fetch(ZHIPU_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + ZHIPU_KEY
+            },
+            body: JSON.stringify({
+                model: 'glm-4-flash',
+                messages: [
+                    {
+                        role: 'system',
+                        content: '你是杭州中考志愿填报资深顾问。2026一段线567分，重高线622分。杭州高中梯队：杭二中/学军/杭外(顶尖)→杭高/十四中/四中(重高)→浙大附中/长河/杭师大附中(优高)。回答专业、结构化、像资深教师在辅导学生。'
+                    },
+                    { role: 'user', content: prompt }
+                ],
+                temperature: 0.7,
+                max_tokens: 2500
+            })
+        });
+        if (resp.ok) {
+            const data = await resp.json();
+            return { success: true, result: data.choices[0].message.content };
+        }
+    } catch(e) {
+        console.log('直连失败，尝试CORS代理:', e.message);
+    }
+
+    // 尝试CORS代理
+    for (const proxy of CORS_PROXIES) {
+        try {
+            const resp = await fetch(proxy + encodeURIComponent(ZHIPU_URL), {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + ZHIPU_KEY
+                },
+                body: JSON.stringify({
+                    model: 'glm-4-flash',
+                    messages: [
+                        { role: 'system', content: '你是杭州中考志愿填报资深顾问，回答专业结构化。' },
+                        { role: 'user', content: prompt }
+                    ],
+                    temperature: 0.7,
+                    max_tokens: 2500
+                })
+            });
+            if (resp.ok) {
+                const data = await resp.json();
+                return { success: true, result: data.choices[0].message.content };
+            }
+        } catch(e) {
+            console.log('代理', proxy, '失败:', e.message);
+        }
+    }
+
+    // 最后尝试：Vercel API
+    try {
+        const resp = await fetch('https://vercel-zhongkao.vercel.app/api/zhongkao', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                nickname: document.getElementById('nickname').value,
+                schoolName: document.getElementById('schoolName').value,
+                mock1Score: parseFloat(document.getElementById('mock1Score').value) || null,
+                mock1Rank: document.getElementById('mock1Rank').value ? parseInt(document.getElementById('mock1Rank').value) : null,
+                mock2Score: parseFloat(document.getElementById('mock2Score').value) || null,
+                mock2Rank: document.getElementById('mock2Rank').value ? parseInt(document.getElementById('mock2Rank').value) : null,
+                targets: document.getElementById('targets').value,
+                homeAddress: document.getElementById('homeAddress').value,
+                boarding: document.getElementById('boarding').value,
+                grade8bScore: document.getElementById('grade8bScore').value ? parseFloat(document.getElementById('grade8bScore').value) : null,
+                grade8bRank: document.getElementById('grade8bRank').value ? parseInt(document.getElementById('grade8bRank').value) : null,
+                grade9aScore: document.getElementById('grade9aScore').value ? parseFloat(document.getElementById('grade9aScore').value) : null,
+                grade9aRank: document.getElementById('grade9aRank').value ? parseInt(document.getElementById('grade9aRank').value) : null,
+            })
+        });
+        if (resp.ok) {
+            const data = await resp.json();
+            if (data.success) return { success: true, result: data.result };
+        }
+    } catch(e) {
+        console.log('Vercel也失败:', e.message);
+    }
+
+    return { success: false, error: '所有调用方式均失败，请检查网络或稍后重试' };
+}
+
+// ==================== 主流程 ====================
+async function generatePlan() {
+    const mock1Score = document.getElementById('mock1Score').value;
+    const mock2Score = document.getElementById('mock2Score').value;
+    const schoolName = document.getElementById('schoolName').value;
+
+    if (!mock1Score && !mock2Score) { showError('请至少填写一模或二模成绩'); return; }
+    if (!schoolName) { showError('请填写所在中学名称'); return; }
+
+    const btn = document.getElementById('submitBtn');
+    btn.disabled = true;
+    btn.textContent = '⏳ AI 深度分析中...';
+    document.getElementById('errorBox').style.display = 'none';
+    document.getElementById('resultBox').style.display = 'none';
+    document.getElementById('loadingBox').style.display = 'block';
+
+    const payload = {
+        nickname: document.getElementById('nickname').value || '',
+        schoolName,
+        mock1Score: parseFloat(mock1Score) || null,
+        mock1Rank: document.getElementById('mock1Rank').value ? parseInt(document.getElementById('mock1Rank').value) : null,
+        mock2Score: parseFloat(mock2Score) || null,
+        mock2Rank: document.getElementById('mock2Rank').value ? parseInt(document.getElementById('mock2Rank').value) : null,
+        targets: document.getElementById('targets').value || '',
+        homeAddress: document.getElementById('homeAddress').value || '',
+        boarding: document.getElementById('boarding').value || '不限',
+        grade8bScore: document.getElementById('grade8bScore').value ? parseFloat(document.getElementById('grade8bScore').value) : null,
+        grade8bRank: document.getElementById('grade8bRank').value ? parseInt(document.getElementById('grade8bRank').value) : null,
+        grade9aScore: document.getElementById('grade9aScore').value ? parseFloat(document.getElementById('grade9aScore').value) : null,
+        grade9aRank: document.getElementById('grade9aRank').value ? parseInt(document.getElementById('grade9aRank').value) : null,
+    };
+
+    const prompt = buildPrompt(payload);
+    const result = await callZhipu(prompt);
+
+    document.getElementById('loadingBox').style.display = 'none';
+    btn.disabled = false;
+    btn.textContent = '🤖 AI 生成志愿方案';
+
+    if (result.success) {
+        document.getElementById('resultBox').style.display = 'block';
+        document.getElementById('resultContent').innerHTML = formatMarkdown(result.result);
+    } else {
+        showError(result.error || '服务异常，请稍后重试');
+    }
+}
+
+function formatMarkdown(text) {
+    if (!text) return '<p>暂无结果</p>';
+    let html = text
+        .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+        .replace(/^### (.+)$/gm, '<h3 style="color:#0f172a;margin:16px 0 8px">$1</h3>')
+        .replace(/^## (.+)$/gm, '<h3 style="color:#0f172a;margin:16px 0 8px;font-size:1.15em">$1</h3>')
+        .replace(/^# (.+)$/gm, '<h2 style="color:#0f172a;margin:20px 0 10px">$1</h2>')
+        .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+        .replace(/\n\|(.+)\|/g, (m, row) => {
+            const cells = row.split('|').map(c => c.trim());
+            return '\n<tr>' + cells.map(c => `<td>${c}</td>`).join('') + '</tr>';
+        })
+        .replace(/^- (.+)$/gm, '<li>$1</li>')
+        .replace(/(<li>.*<\/li>\n?)+/g, '<ul>$&</ul>')
+        .replace(/\n\n/g, '</p><p>')
+        .replace(/\n/g, '<br>');
+    return '<p>' + html + '</p>';
+}
+
+function showError(msg) {
+    document.getElementById('errorBox').textContent = '❌ ' + msg;
+    document.getElementById('errorBox').style.display = 'block';
+}
+</script>
 </body>
 </html>
