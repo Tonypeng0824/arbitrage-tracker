@@ -121,13 +121,28 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Micr
   </div>
 </details>
 <div class="model-row">
-  <span>🤖 AI模型：</span>
-  <select id="modelSelect">
-    <option value="glm-4-flash">智谱 GLM-4-Flash（免费·快速）</option>
-    <option value="glm-4">智谱 GLM-4（更强·消耗token）</option>
-    <option value="glm-4-plus">智谱 GLM-4-Plus（最强·消耗token）</option>
+  <span>🤖 模型：</span>
+  <select id="modelSelect" onchange="onModelChange()">
+    <optgroup label="智谱AI（已配置）">
+      <option value="zhipu|glm-4-flash">GLM-4-Flash（免费·快速）</option>
+    </optgroup>
+    <optgroup label="硅基流动 SiliconFlow（需配置Key）">
+      <option value="siliconflow|deepseek-ai/DeepSeek-R1">DeepSeek-R1（免费·推理强）</option>
+      <option value="siliconflow|Qwen/Qwen3-8B">Qwen3-8B（免费·中文好）</option>
+    </optgroup>
+    <optgroup label="火山引擎（需配置Key）">
+      <option value="volcano|doubao-lite-32k">Doubao-lite（免费·200万Token/天）</option>
+    </optgroup>
+    <optgroup label="百度千帆（需配置Key）">
+      <option value="baidu|ernie-speed-8k">ERNIE-Speed（永久免费）</option>
+    </optgroup>
   </select>
-  <span style="font-size:0.78em;color:#94a3b8">推荐理由生成用，不影响表格计算</span>
+</div>
+<div class="model-row" id="apiKeyRow" style="display:none">
+  <span>🔑 Key：</span>
+  <input type="password" id="apiKeyInput" placeholder="输入API Key（仅存本地浏览器）" style="flex:1;padding:6px 12px;border:2px solid #e2e8f0;border-radius:8px;font-size:0.88em">
+  <button onclick="saveApiKey()" style="padding:6px 14px;background:#059669;color:white;border:none;border-radius:8px;cursor:pointer;font-size:0.85em">💾 保存</button>
+  <span id="keyStatus" style="font-size:0.78em;color:#94a3b8"></span>
 </div>
 <button class="btn-submit" id="submitBtn" onclick="generate()">🤖 生成志愿方案</button>
 </div>
@@ -320,10 +335,69 @@ function renderReport(data, calc, aiText) {
   return h;
 }
 
-// ==================== AI调用 ====================
-var ZHIPU_KEY = 'd66eba51f54e4211aed6f9af217ca122.pKK63AJ6GVVRN4xk';
+// ==================== 多平台API配置 ====================
+var MODEL_CONFIGS = {
+  'zhipu': {
+    name:'智谱AI', endpoint:'https://open.bigmodel.cn/api/paas/v4/chat/completions',
+    defaultKey:'d66eba51f54e4211aed6f9af217ca122.pKK63AJ6GVVRN4xk',
+    headers:function(k){return {'Content-Type':'application/json','Authorization':'Bearer '+k};},
+    body:function(m,k){return JSON.stringify({model:m,messages:[{role:'system',content:'杭州中考志愿专家，专业务实简洁。纯文本，不用Markdown。'},{role:'user',content:k}],temperature:0.5,max_tokens:400});}
+  },
+  'siliconflow': {
+    name:'硅基流动', endpoint:'https://api.siliconflow.cn/v1/chat/completions',
+    defaultKey:'',
+    headers:function(k){return {'Content-Type':'application/json','Authorization':'Bearer '+k};},
+    body:function(m,k){return JSON.stringify({model:m,messages:[{role:'system',content:'杭州中考志愿专家，专业务实简洁。纯文本。'},{role:'user',content:k}],temperature:0.5,max_tokens:400});}
+  },
+  'volcano': {
+    name:'火山引擎', endpoint:'https://ark.cn-beijing.volces.com/api/v3/chat/completions',
+    defaultKey:'',
+    headers:function(k){return {'Content-Type':'application/json','Authorization':'Bearer '+k};},
+    body:function(m,k){return JSON.stringify({model:m,messages:[{role:'system',content:'杭州中考志愿专家，专业务实简洁。'},{role:'user',content:k}],temperature:0.5,max_tokens:400});}
+  },
+  'baidu': {
+    name:'百度千帆', endpoint:'https://qianfan.baidubce.com/v2/chat/completions',
+    defaultKey:'',
+    headers:function(k){return {'Content-Type':'application/json','Authorization':'Bearer '+k};},
+    body:function(m,k){return JSON.stringify({model:m,messages:[{role:'system',content:'杭州中考志愿专家，专业务实简洁。'},{role:'user',content:k}],temperature:0.5,max_tokens:400});}
+  }
+};
 
-async function getAI(data, calc, model) {
+// localStorage管理
+function getKey(platform){return localStorage.getItem('zk_key_'+platform)||MODEL_CONFIGS[platform].defaultKey||'';}
+function saveKey(platform,key){localStorage.setItem('zk_key_'+platform,key);}
+function onModelChange(){
+  var sel=document.getElementById('modelSelect').value.split('|');
+  var platform=sel[0];
+  var row=document.getElementById('apiKeyRow');
+  var input=document.getElementById('apiKeyInput');
+  var status=document.getElementById('keyStatus');
+  if(platform==='zhipu'){row.style.display='none';return;}
+  row.style.display='flex';
+  input.value=getKey(platform);
+  status.textContent=getKey(platform)?'✅ 已保存':'⚠ 需要Key';
+}
+function saveApiKey(){
+  var sel=document.getElementById('modelSelect').value.split('|');
+  var platform=sel[0], key=document.getElementById('apiKeyInput').value.trim();
+  if(!key){document.getElementById('keyStatus').textContent='❌ Key不能为空';return;}
+  saveKey(platform,key);
+  document.getElementById('keyStatus').textContent='✅ 已保存';
+}
+// 页面加载时恢复
+(function(){
+  var sel=document.getElementById('modelSelect');
+  var saved=localStorage.getItem('zk_last_model');
+  if(saved) sel.value=saved;
+  onModelChange();
+})();
+
+async function getAI(data, calc, modelKey) {
+  var parts=modelKey.split('|'), platform=parts[0], model=parts[1];
+  var cfg=MODEL_CONFIGS[platform];
+  var key=getKey(platform);
+  if(!key && platform!=='zhipu') return '(请先配置'+cfg.name+'的API Key)';
+
   var es=calc.estScore;
   var p='你是杭州中考志愿资深顾问。为以下学生写100-150字分析：\n\n';
   p+='学生：'+(data.nickname||'考生')+'，'+data.schoolName+'\n';
@@ -333,28 +407,32 @@ async function getAI(data, calc, model) {
   p+='\n\n要求：3段分析。1)成绩定位(1句) 2)策略建议(2句) 3)风险提示(1句)。纯文本，专业务实。';
 
   try{
-    var resp=await fetch('https://open.bigmodel.cn/api/paas/v4/chat/completions',{
+    var resp=await fetch(cfg.endpoint,{
       method:'POST',
-      headers:{'Content-Type':'application/json','Authorization':'Bearer '+ZHIPU_KEY},
-      body:JSON.stringify({
-        model:model,
-        messages:[
-          {role:'system',content:'杭州中考志愿专家，回答专业务实简洁。纯文本，不用Markdown。'},
-          {role:'user',content:p}
-        ],
-        temperature:0.5, max_tokens:400
-      })
+      headers:cfg.headers(key),
+      body:cfg.body(model, p)
     });
     if(resp.ok){var r=await resp.json();return r.choices[0].message.content;}
-    // 如果model不支持，fallback到flash
-    if(model!=='glm-4-flash'){
-      resp=await fetch('https://open.bigmodel.cn/api/paas/v4/chat/completions',{
-        method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+ZHIPU_KEY},
-        body:JSON.stringify({model:'glm-4-flash',messages:[{role:'system',content:'杭州中考志愿专家，纯文本。'},{role:'user',content:p}],temperature:0.5,max_tokens:400})
+
+    // 失败时fallback到智谱
+    if(platform!=='zhipu'){
+      var zcfg=MODEL_CONFIGS['zhipu'];
+      resp=await fetch(zcfg.endpoint,{
+        method:'POST',headers:zcfg.headers(zcfg.defaultKey),
+        body:zcfg.body('glm-4-flash', p)
       });
-      if(resp.ok){var r2=await resp.json();return '(模型降级为GLM-4-Flash)\n'+r2.choices[0].message.content;}
+      if(resp.ok){var r2=await resp.json();return '(降级为智谱GLM-4-Flash)\n'+r2.choices[0].message.content;}
     }
-  }catch(e){}
+  }catch(e){console.log(platform+' error:',e.message);}
+
+  // 最终fallback
+  if(platform!=='zhipu'){
+    try{
+      var zcfg=MODEL_CONFIGS['zhipu'];
+      var resp=await fetch(zcfg.endpoint,{method:'POST',headers:zcfg.headers(zcfg.defaultKey),body:zcfg.body('glm-4-flash',p)});
+      if(resp.ok){var r3=await resp.json();return '(降级为智谱GLM-4-Flash)\n'+r3.choices[0].message.content;}
+    }catch(e){}
+  }
   return '（AI服务暂不可用。以下志愿表格为前端精确计算，请参考表格和风险提示自行判断。）';
 }
 
@@ -381,6 +459,7 @@ async function generate(){
   document.getElementById('loadingBox').style.display='block';
 
   var model=document.getElementById('modelSelect').value;
+  localStorage.setItem('zk_last_model', model);
   var calc=compute(data);
   var aiText=await getAI(data,calc,model);
 
