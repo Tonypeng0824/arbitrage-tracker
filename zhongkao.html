@@ -177,16 +177,100 @@ var S = [
   {n:"淳安中学(新)",t:3,tn:"2026县中",s:570,b:"是",d:"淳安县",note:"首招主城区"},
 ];
 
-var PRED = {yd:567,zg:622,q3:632,yg:610};
+// ==================== 2026年预测线 ====================
+var PRED = {yd:567, zg:622, q3:632, yg:610};
 
-// ==================== 冲稳保：用分差计算，不用位置 ====================
-function classifySchool(school, estScore) {
-  var diff = estScore - school.s;
-  if(diff >= 10) return '保';        // 超出10分以上 → 稳妥保底
-  if(diff >= 3) return '稳';         // 超出3-10分 → 稳稳的
-  if(diff >= -5) return '稳';        // ±5分以内 → 持平稳妥
-  if(diff >= -15) return '冲';       // 低于5-15分 → 可以冲
-  return '冲(难)';                    // 低于15分以上 → 高难度冲刺
+// ==================== 冲稳保：基于2026预测线分档 ====================
+function classifySchool(sch, estScore) {
+  var diff = estScore - sch.s;
+  // 与2026预测线对比来确定分档
+  if (estScore >= PRED.q3) {  // 考生已超前三线
+    if(diff >= 5) return '保';        // 超录取分5+ → 保
+    if(diff >= -5) return '稳';       // ±5 → 稳
+    if(diff >= -15) return '冲';      // 低15内 → 冲
+    return '冲(难)';
+  }
+  if (estScore >= PRED.zg) {  // 考生已超重高线（620+）
+    if(diff >= 10) return '保';
+    if(diff >= -5) return '稳';
+    if(diff >= -20) return '冲';
+    return '冲(难)';
+  }
+  if (estScore >= PRED.yg) {  // 考生在优高~重高区间（610~622）
+    if(diff >= 15) return '保';
+    if(diff >= -5) return '稳';
+    if(diff >= -25) return '冲';
+    return '冲(难)';
+  }
+  if (estScore >= PRED.yd) {  // 考生在一段~优高区间（567~610）
+    if(diff >= 20) return '保(极稳)';
+    if(diff >= 8) return '保';
+    if(diff >= -10) return '稳';
+    if(diff >= -30) return '冲';
+    return '冲(难)';
+  }
+  // 考生低于一段线
+  if(diff >= 25) return '保(极稳)';
+  if(diff >= 10) return '保';
+  if(diff >= -10) return '稳';
+  return '冲';
+}
+
+// ==================== 分配生 & 裸考选校逻辑 ====================
+function pickAllocation(schools, bestRank, totalQ, top3Q, top8Q) {
+  // 分配生5校：按分档各取一些，形成阶梯
+  var all = schools.filter(function(s){return s.type!=='冲(难)';}); // 高难度冲的不适合分配生
+  var chong=[], wen=[], bao=[];
+  all.forEach(function(s){
+    if(s.type==='冲') chong.push(s);
+    else if(s.type==='稳') wen.push(s);
+    else bao.push(s);
+  });
+  chong.sort(function(a,b){return b.s-a.s;}); // 冲的从高到低
+  wen.sort(function(a,b){return b.s-a.s;});
+  bao.sort(function(a,b){return b.s-a.s;});
+
+  var plan=[];
+  // 1冲 + 2稳 + 1保 + 灵活填充
+  if(chong.length) plan.push({type:'冲',s:chong[0]});        // 1个最好的冲
+  plan=plan.concat(wen.slice(0,2).map(function(s){return {type:'稳',s:s};})); // 2个稳
+  if(bao.length) plan.push({type:'保',s:bao[0]});            // 1个保
+
+  // 补齐到5个：从剩余学校按分数从高到低补
+  var used={};
+  plan.forEach(function(e){used[e.s.n]=true;});
+  all.sort(function(a,b){return b.s-a.s;});
+  for(var i=0;i<all.length && plan.length<5;i++){
+    if(!used[all[i].n]){plan.push({type:all[i].type,s:all[i]});used[all[i].n]=true;}
+  }
+  plan.sort(function(a,b){return b.s.s-a.s.s;}); // 按分数从高到低排
+  return {slots:plan, totalQ:totalQ, top3Q:top3Q, top8Q:top8Q};
+}
+
+function pickNakedExam(schools) {
+  // 裸考10校：3冲+4稳+3保的混合
+  var chong=[], wen=[], bao=[];
+  schools.forEach(function(s){
+    var t=s.type;
+    if(t==='冲'||t==='冲(难)') chong.push(s);
+    else if(t==='稳') wen.push(s);
+    else bao.push(s);
+  });
+
+  var plan=[];
+  // 冲→取最低的3个（最容易够到的）
+  chong.sort(function(a,b){return a.s-b.s;}); // 分数低→高
+  plan=plan.concat(chong.slice(0,3));
+  // 稳→取所有
+  plan=plan.concat(wen);
+  // 保→取最高的3个
+  bao.sort(function(a,b){return b.s-a.s;});
+  plan=plan.concat(bao.slice(0,3));
+
+  // 全按分数降序
+  plan.sort(function(a,b){return b.s-a.s;});
+  // 限10个
+  return plan.slice(0,10).map(function(s,i){return {i:i+1,type:s.type,s:s};});
 }
 
 // ==================== 核心计算 ====================
@@ -197,45 +281,30 @@ function compute(data) {
   var top8Q = Math.round(sc * 0.09);
   var bestScore = data.mock2Score || data.mock1Score;
   var bestRank = data.mock2Rank || data.mock1Rank;
-  var estScore = bestScore + 28; // 中考预估=模考+28
+  var estScore = bestScore + 28;
   var trend = data.mock1Score && data.mock2Score ? (data.mock2Score-data.mock1Score) : null;
 
-  // 对每所学校用分差计算冲稳保
+  // 对所有学校分档
   var all = [];
   S.forEach(function(sch){
     if(!sch.s) return;
     var type = classifySchool(sch, estScore);
-    // 住校过滤
     if(data.boarding==='希望住校' && sch.b==='否') return;
     all.push({
-      n:sch.n, t:sch.t, tn:sch.tn, s:sch.s, b:sch.b, d:sch.d, g:sch.g,
+      n:sch.n, t:sch.t, tn:sch.tn, s:sch.s, b:sch.b, d:sch.d,
       a:sch.a||'', m:sch.m||'', note:sch.note||'',
       diff:(estScore-sch.s).toFixed(0), type:type
     });
   });
-
-  // 按录取分从高到低排序
   all.sort(function(a,b){return b.s - a.s;});
 
-  // 分配生：2冲+2稳+1保（按校内排名估计）
-  var allocPlan = [];
-  var allocSeen = {chong:0, wen:0, bao:0};
-  all.forEach(function(sch){
-    var t = sch.type;
-    if(t==='冲'||t==='冲(难)') t='冲';
-    if(t==='冲' && allocSeen.chong<2){allocPlan.push({type:'冲',s:sch});allocSeen.chong++;}
-    else if(t==='稳' && allocSeen.wen<2){allocPlan.push({type:'稳',s:sch});allocSeen.wen++;}
-    else if(t==='保' && allocSeen.bao<1){allocPlan.push({type:'保',s:sch});allocSeen.bao++;}
-  });
-  while(allocPlan.length<5 && all.length>allocPlan.length){
-    var s=all[allocPlan.length]; allocPlan.push({type:s.type.replace('(难)',''),s:s});
-  }
+  // 分配生
+  var allocPlan = pickAllocation(all, bestRank, totalQ, top3Q, top8Q);
+  // 裸考
+  var nkPlan = pickNakedExam(all);
 
-  // 裸考：取前10所，用真实分差类型
-  var nkPlan = all.slice(0,10);
-
-  // 分配生概率
-  var allocProb='无法评估', top3Prob='无法评估';
+  // 概率
+  var allocProb='?', top3Prob='?';
   if(bestRank && sc){
     allocProb = bestRank<=totalQ?'高':(bestRank<=totalQ*1.3?'中':'低');
     top3Prob = bestRank<=top3Q?'高':(bestRank<=top3Q*2?'中':'低');
