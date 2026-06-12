@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "name": "lof-fund-arbitrage",
+  "builds": [
+    { "src": "**/*.html", "use": "@vercel/static" },
+    { "src": "**/*.css", "use": "@vercel/static" },
+    { "src": "**/*.js", "use": "@vercel/static" },
+    { "src": "**/*.json", "use": "@vercel/static" }
+  ],
+  "routes": [
+    { "src": "/(.*)", "dest": "/$1" }
+  ],
+  "cleanUrls": false,
+  "trailingSlash": false
+}
