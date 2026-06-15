@@ -547,7 +547,7 @@ tr:hover { background: var(--bg-card-hover); }
     </div>
     <div class="live-indicator">
       <div class="live-dot"></div>
-      <span>LIVE · 2026-06-15 19:56:38</span>
+      <span>LIVE · 2026-06-15 22:42:18</span>
     </div>
   </div>
 
@@ -555,38 +555,92 @@ tr:hover { background: var(--bg-card-hover); }
   <div class="kpi-grid">
     <div class="kpi-card blue">
       <div class="kpi-label">LOF 总数</div>
-      <div class="kpi-value blue">390</div>
+      <div class="kpi-value blue">399</div>
       <div class="kpi-sub">全市场LOF基金</div>
     </div>
     <div class="kpi-card orange">
       <div class="kpi-label">有限额/限大额</div>
-      <div class="kpi-value orange">38</div>
+      <div class="kpi-value orange">39</div>
       <div class="kpi-sub">含限大额 · 可套利标的</div>
     </div>
     <div class="kpi-card red">
       <div class="kpi-label">暂停申购</div>
-      <div class="kpi-value red">54</div>
+      <div class="kpi-value red">58</div>
       <div class="kpi-sub">无法交易</div>
     </div>
     <div class="kpi-card green">
       <div class="kpi-label">开放无限制</div>
-      <div class="kpi-value green">298</div>
+      <div class="kpi-value green">302</div>
       <div class="kpi-sub">无限额申购</div>
     </div>
-    <div class="kpi-card ">
+    <div class="kpi-card accent">
       <div class="kpi-label">今日变动</div>
-      <div class="kpi-value accent">0</div>
-      <div class="kpi-sub">与昨日一致</div>
+      <div class="kpi-value accent glitch">9</div>
+      <div class="kpi-sub">⚠️ 限额已变化！</div>
     </div>
   </div>
 
   <!-- Alert Banner -->
-  <div class="alert-banner ">
-    <div class="alert-icon">✅</div>
+  <div class="alert-banner pulse">
+    <div class="alert-icon">⚠️</div>
     <div class="alert-content">
-      <div class="alert-title">系统状态正常 · 无新变化</div>
+      <div class="alert-title">套利机会提醒！以下基金申购限额发生变化</div>
       <div class="alert-items">
-        <div class="no-changes">✓ 今日无申购限额变动，所有基金限额与昨日一致</div>
+        
+            <div class="alert-item">
+                <span class="alert-code">159501</span>
+                <span class="alert-name">纳指ETF嘉实</span>
+                <span class="alert-arrow">→</span>
+                <span class="alert-new">无限制</span>
+            </div>
+            <div class="alert-item">
+                <span class="alert-code">159612</span>
+                <span class="alert-name">标普500ETF国泰</span>
+                <span class="alert-arrow">→</span>
+                <span class="alert-new">暂停申购</span>
+            </div>
+            <div class="alert-item">
+                <span class="alert-code">159659</span>
+                <span class="alert-name">纳斯达克100ETF招商</span>
+                <span class="alert-arrow">→</span>
+                <span class="alert-new">无限制</span>
+            </div>
+            <div class="alert-item">
+                <span class="alert-code">159941</span>
+                <span class="alert-name">纳指ETF广发</span>
+                <span class="alert-arrow">→</span>
+                <span class="alert-new">无限制</span>
+            </div>
+            <div class="alert-item">
+                <span class="alert-code">270042</span>
+                <span class="alert-name">广发纳斯达克100ETF联接人民币(QDII)A</span>
+                <span class="alert-arrow">→</span>
+                <span class="alert-new">10.00元</span>
+            </div>
+            <div class="alert-item">
+                <span class="alert-code">513100</span>
+                <span class="alert-name">纳指ETF国泰</span>
+                <span class="alert-arrow">→</span>
+                <span class="alert-new">暂停申购</span>
+            </div>
+            <div class="alert-item">
+                <span class="alert-code">513300</span>
+                <span class="alert-name">纳斯达克ETF华夏</span>
+                <span class="alert-arrow">→</span>
+                <span class="alert-new">无限制</span>
+            </div>
+            <div class="alert-item">
+                <span class="alert-code">513390</span>
+                <span class="alert-name">纳指100ETF博时</span>
+                <span class="alert-arrow">→</span>
+                <span class="alert-new">暂停申购</span>
+            </div>
+            <div class="alert-item">
+                <span class="alert-code">513500</span>
+                <span class="alert-name">标普500ETF博时</span>
+                <span class="alert-arrow">→</span>
+                <span class="alert-new">暂停申购</span>
+            </div>
       </div>
     </div>
   </div>
@@ -597,7 +651,7 @@ tr:hover { background: var(--bg-card-hover); }
     <button class="tab-btn" onclick="switchTab('detail')">📋 明细列表</button>
     <button class="tab-btn" onclick="switchTab('chart')">📈 趋势图表</button>
     <button class="tab-btn" onclick="switchTab('weekly')">📜 限额历史</button>
-    <button class="tab-btn" onclick="switchTab('changes')">⚡ 变动记录 (0)</button>
+    <button class="tab-btn" onclick="switchTab('changes')">⚡ 变动记录 (9)</button>
   </div>
 
   <!-- Tab 1: Overview -->
@@ -605,7 +659,7 @@ tr:hover { background: var(--bg-card-hover); }
     <div class="card">
       <div class="card-header">
         <div class="card-title">📊 实时总览 · 限额分布</div>
-        <span class="card-badge green">更新于 2026-06-15 19:56:38</span>
+        <span class="card-badge green">更新于 2026-06-15 22:42:18</span>
       </div>
       <div class="chart-wrap">
         <canvas id="overviewChart"></canvas>
@@ -614,7 +668,7 @@ tr:hover { background: var(--bg-card-hover); }
     <div class="card">
       <div class="card-header">
         <div class="card-title">🔍 重点关注 · 具体限额基金 (限大额 / 有数字限额)</div>
-        <span class="card-badge orange">38 只</span>
+        <span class="card-badge orange">39 只</span>
       </div>
       <div class="table-wrap">
         <table>
@@ -914,6 +968,15 @@ tr:hover { background: var(--bg-card-hover); }
               <td class="num-cell">1.50%</td>
             </tr>
             <tr class="row-limited">
+              <td class="code-cell">270042</td>
+              <td class="name-cell">广发纳斯达克100ETF联接人民币(QDII)A</td>
+              <td><span class="badge badge-orange">限大额</span></td>
+              <td class="limit-cell">10.00元</td>
+              <td class="num-cell">1.30%</td>
+              <td class="num-cell">0.13%</td>
+              <td class="num-cell">1.50%</td>
+            </tr>
+            <tr class="row-limited">
               <td class="code-cell">501064</td>
               <td class="name-cell">国泰价值优选灵活配置混合(LOF)A</td>
               <td><span class="badge badge-orange">限大额</span></td>
@@ -978,7 +1041,7 @@ tr:hover { background: var(--bg-card-hover); }
     <div class="card">
       <div class="card-header">
         <div class="card-title">📋 全部基金限额明细</div>
-        <span class="card-badge green">390 只</span>
+        <span class="card-badge green">399 只</span>
       </div>
       <div class="filter-bar">
         <input type="text" class="filter-input" id="search-detail" placeholder="搜索代码/名称..." oninput="filterDetail()">
@@ -1260,6 +1323,14 @@ tr:hover { background: var(--bg-card-hover); }
             <td class="num-cell">0.15%</td>
             <td class="num-cell">1.50%</td>
         </tr><tr class="row-limited" data-type="row-limited">
+            <td class="code-cell">270042</td>
+            <td class="name-cell">广发纳斯达克100ETF联接人民币(QDII)A</td>
+            <td><span class="badge badge-orange">限大额 10.00元</span></td>
+            <td class="limit-cell">10.00元</td>
+            <td class="num-cell">1.30%</td>
+            <td class="num-cell">0.13%</td>
+            <td class="num-cell">1.50%</td>
+        </tr><tr class="row-limited" data-type="row-limited">
             <td class="code-cell">501064</td>
             <td class="name-cell">国泰价值优选灵活配置混合(LOF)A</td>
             <td><span class="badge badge-orange">限大额 100.00万元</span></td>
@@ -1307,6 +1378,30 @@ tr:hover { background: var(--bg-card-hover); }
             <td class="num-cell">1.20%</td>
             <td class="num-cell">0.12%</td>
             <td class="num-cell">1.50%</td>
+        </tr><tr class="row-open" data-type="row-open">
+            <td class="code-cell">159501</td>
+            <td class="name-cell">纳指ETF嘉实</td>
+            <td><span class="badge badge-green">开放</span></td>
+            <td class="limit-cell">无限制</td>
+            <td class="num-cell"></td>
+            <td class="num-cell"></td>
+            <td class="num-cell"></td>
+        </tr><tr class="row-open" data-type="row-open">
+            <td class="code-cell">159659</td>
+            <td class="name-cell">纳斯达克100ETF招商</td>
+            <td><span class="badge badge-green">开放</span></td>
+            <td class="limit-cell">无限制</td>
+            <td class="num-cell"></td>
+            <td class="num-cell"></td>
+            <td class="num-cell"></td>
+        </tr><tr class="row-open" data-type="row-open">
+            <td class="code-cell">159941</td>
+            <td class="name-cell">纳指ETF广发</td>
+            <td><span class="badge badge-green">开放</span></td>
+            <td class="limit-cell">无限制</td>
+            <td class="num-cell"></td>
+            <td class="num-cell"></td>
+            <td class="num-cell"></td>
         </tr><tr class="row-open" data-type="row-open">
             <td class="code-cell">160105</td>
             <td class="name-cell">南方积极配置混合(LOF)</td>
@@ -3691,6 +3786,22 @@ tr:hover { background: var(--bg-card-hover); }
             <td class="num-cell">0.50%</td>
             <td class="num-cell">0.05%</td>
             <td class="num-cell">1.50%</td>
+        </tr><tr class="row-open" data-type="row-open">
+            <td class="code-cell">513300</td>
+            <td class="name-cell">纳斯达克ETF华夏</td>
+            <td><span class="badge badge-green">开放</span></td>
+            <td class="limit-cell">无限制</td>
+            <td class="num-cell"></td>
+            <td class="num-cell"></td>
+            <td class="num-cell"></td>
+        </tr><tr class="row-paused" data-type="row-paused">
+            <td class="code-cell">159612</td>
+            <td class="name-cell">标普500ETF国泰</td>
+            <td><span class="badge badge-red">暂停</span></td>
+            <td class="limit-cell">暂停申购</td>
+            <td class="num-cell"></td>
+            <td class="num-cell"></td>
+            <td class="num-cell"></td>
         </tr><tr class="row-paused" data-type="row-paused">
             <td class="code-cell">160128</td>
             <td class="name-cell">南方金利定开债券A</td>
@@ -4123,6 +4234,30 @@ tr:hover { background: var(--bg-card-hover); }
             <td class="num-cell">1.50%</td>
             <td class="num-cell">0.15%</td>
             <td class="num-cell">1.50%</td>
+        </tr><tr class="row-paused" data-type="row-paused">
+            <td class="code-cell">513100</td>
+            <td class="name-cell">纳指ETF国泰</td>
+            <td><span class="badge badge-red">暂停</span></td>
+            <td class="limit-cell">暂停申购</td>
+            <td class="num-cell"></td>
+            <td class="num-cell"></td>
+            <td class="num-cell"></td>
+        </tr><tr class="row-paused" data-type="row-paused">
+            <td class="code-cell">513390</td>
+            <td class="name-cell">纳指100ETF博时</td>
+            <td><span class="badge badge-red">暂停</span></td>
+            <td class="limit-cell">暂停申购</td>
+            <td class="num-cell"></td>
+            <td class="num-cell"></td>
+            <td class="num-cell"></td>
+        </tr><tr class="row-paused" data-type="row-paused">
+            <td class="code-cell">513500</td>
+            <td class="name-cell">标普500ETF博时</td>
+            <td><span class="badge badge-red">暂停</span></td>
+            <td class="limit-cell">暂停申购</td>
+            <td class="num-cell"></td>
+            <td class="num-cell"></td>
+            <td class="num-cell"></td>
         </tr>          </tbody>
         </table>
       </div>
@@ -4194,12 +4329,16 @@ tr:hover { background: var(--bg-card-hover); }
 <tr><td class="code-cell">165515</td><td class="name-cell">中信保诚沪深300指数(LOF)A</td><td>50.00万元</td><td>50.00万元</td><td>50.00万元</td><td>50.00万元</td><td>50.00万元</td><td>50.00万元</td><td>50.00万元</td></tr>
 <tr><td class="code-cell">166016</td><td class="name-cell">中欧纯债债券(LOF)C</td><td>5000.00万元</td><td>5000.00万元</td><td>5000.00万元</td><td>5000.00万元</td><td>5000.00万元</td><td>5000.00万元</td><td>5000.00万元</td></tr>
 <tr><td class="code-cell">167002</td><td class="name-cell">平安鼎越混合(LOF)</td><td>100.00万元</td><td>100.00万元</td><td>100.00万元</td><td>100.00万元</td><td>100.00万元</td><td>100.00万元</td><td>100.00万元</td></tr>
+<tr><td class="code-cell">270042</td><td class="name-cell">广发纳斯达克100ETF联接人民币(QDII)A</td><td>10.00元</td><td class="changed-cell">-</td><td class="changed-cell">-</td><td class="changed-cell">-</td><td class="changed-cell">-</td><td class="changed-cell">-</td><td class="changed-cell">-</td></tr>
 <tr><td class="code-cell">501064</td><td class="name-cell">国泰价值优选灵活配置混合(LOF)A</td><td>100.00万元</td><td>100.00万元</td><td>100.00万元</td><td>100.00万元</td><td>100.00万元</td><td>100.00万元</td><td>100.00万元</td></tr>
 <tr><td class="code-cell">501077</td><td class="name-cell">富国创新企业灵活配置混合(LOF)A</td><td>500.00万元</td><td>500.00万元</td><td>500.00万元</td><td>500.00万元</td><td>500.00万元</td><td>500.00万元</td><td>500.00万元</td></tr>
 <tr><td class="code-cell">501203</td><td class="name-cell">易方达创新未来混合(LOF)</td><td>限大额</td><td>限大额</td><td>限大额</td><td>限大额</td><td>限大额</td><td>限大额</td><td>限大额</td></tr>
 <tr><td class="code-cell">501219</td><td class="name-cell">华夏智胜先锋股票(LOF)A</td><td>1000.00万元</td><td>1000.00万元</td><td>1000.00万元</td><td>1000.00万元</td><td>1000.00万元</td><td>1000.00万元</td><td>1000.00万元</td></tr>
 <tr><td class="code-cell">501300</td><td class="name-cell">海富通全球收益债券人民币</td><td>5000.00万元</td><td>5000.00万元</td><td>5000.00万元</td><td>5000.00万元</td><td>5000.00万元</td><td>5000.00万元</td><td>5000.00万元</td></tr>
 <tr><td class="code-cell">501312</td><td class="name-cell">华宝海外科技股票(QDII-LOF)A</td><td>100.00元</td><td>100.00元</td><td>100.00元</td><td>100.00元</td><td>100.00元</td><td>100.00元</td><td>100.00元</td></tr>
+<tr><td class="code-cell">159501</td><td class="name-cell">纳指ETF嘉实</td><td>无限制</td><td class="changed-cell">-</td><td class="changed-cell">-</td><td class="changed-cell">-</td><td class="changed-cell">-</td><td class="changed-cell">-</td><td class="changed-cell">-</td></tr>
+<tr><td class="code-cell">159659</td><td class="name-cell">纳斯达克100ETF招商</td><td>无限制</td><td class="changed-cell">-</td><td class="changed-cell">-</td><td class="changed-cell">-</td><td class="changed-cell">-</td><td class="changed-cell">-</td><td class="changed-cell">-</td></tr>
+<tr><td class="code-cell">159941</td><td class="name-cell">纳指ETF广发</td><td>无限制</td><td class="changed-cell">-</td><td class="changed-cell">-</td><td class="changed-cell">-</td><td class="changed-cell">-</td><td class="changed-cell">-</td><td class="changed-cell">-</td></tr>
 <tr><td class="code-cell">160105</td><td class="name-cell">南方积极配置混合(LOF)</td><td>无限制</td><td>无限制</td><td>无限制</td><td>无限制</td><td>无限制</td><td>无限制</td><td>无限制</td></tr>
 <tr><td class="code-cell">160106</td><td class="name-cell">南方高增长混合(LOF)</td><td>无限制</td><td>无限制</td><td>无限制</td><td>无限制</td><td>无限制</td><td>无限制</td><td>无限制</td></tr>
 <tr><td class="code-cell">160119</td><td class="name-cell">南方中证500ETF联接(LOF)A</td><td>无限制</td><td>无限制</td><td>无限制</td><td>无限制</td><td>无限制</td><td>无限制</td><td>无限制</td></tr>
@@ -4498,6 +4637,8 @@ tr:hover { background: var(--bg-card-hover); }
 <tr><td class="code-cell">502023</td><td class="name-cell">鹏华国证钢铁行业指数(LOF)A</td><td>无限制</td><td>无限制</td><td>无限制</td><td>无限制</td><td>无限制</td><td>无限制</td><td>无限制</td></tr>
 <tr><td class="code-cell">502053</td><td class="name-cell">长盛中证证券公司指数(LOF)A</td><td>无限制</td><td>无限制</td><td>无限制</td><td>无限制</td><td>无限制</td><td>无限制</td><td>无限制</td></tr>
 <tr><td class="code-cell">502056</td><td class="name-cell">广发中证医疗ETF联接(LOF)A</td><td>无限制</td><td>无限制</td><td>无限制</td><td>无限制</td><td>无限制</td><td>无限制</td><td>无限制</td></tr>
+<tr><td class="code-cell">513300</td><td class="name-cell">纳斯达克ETF华夏</td><td>无限制</td><td class="changed-cell">-</td><td class="changed-cell">-</td><td class="changed-cell">-</td><td class="changed-cell">-</td><td class="changed-cell">-</td><td class="changed-cell">-</td></tr>
+<tr><td class="code-cell">159612</td><td class="name-cell">标普500ETF国泰</td><td>暂停申购</td><td class="changed-cell">-</td><td class="changed-cell">-</td><td class="changed-cell">-</td><td class="changed-cell">-</td><td class="changed-cell">-</td><td class="changed-cell">-</td></tr>
 <tr><td class="code-cell">160128</td><td class="name-cell">南方金利定开债券A</td><td>无限制</td><td>无限制</td><td>无限制</td><td>无限制</td><td>无限制</td><td>无限制</td><td>无限制</td></tr>
 <tr><td class="code-cell">160143</td><td class="name-cell">南方创业板2年定期开放混合</td><td>无限制</td><td>无限制</td><td>无限制</td><td>无限制</td><td>无限制</td><td>无限制</td><td>无限制</td></tr>
 <tr><td class="code-cell">160325</td><td class="name-cell">华夏创业板两年定开混合</td><td>无限制</td><td>无限制</td><td>无限制</td><td>无限制</td><td>无限制</td><td>无限制</td><td>无限制</td></tr>
@@ -4552,6 +4693,9 @@ tr:hover { background: var(--bg-card-hover); }
 <tr><td class="code-cell">506005</td><td class="name-cell">博时科创板三年定开混合</td><td>无限制</td><td>无限制</td><td>无限制</td><td>无限制</td><td>无限制</td><td>无限制</td><td>无限制</td></tr>
 <tr><td class="code-cell">506006</td><td class="name-cell">汇添富科创板2年定开混合</td><td>无限制</td><td>无限制</td><td>无限制</td><td>无限制</td><td>无限制</td><td>无限制</td><td>无限制</td></tr>
 <tr><td class="code-cell">506008</td><td class="name-cell">长城科创两年定开混合A</td><td>无限制</td><td>无限制</td><td>无限制</td><td>无限制</td><td>无限制</td><td>无限制</td><td>无限制</td></tr>
+<tr><td class="code-cell">513100</td><td class="name-cell">纳指ETF国泰</td><td>暂停申购</td><td class="changed-cell">-</td><td class="changed-cell">-</td><td class="changed-cell">-</td><td class="changed-cell">-</td><td class="changed-cell">-</td><td class="changed-cell">-</td></tr>
+<tr><td class="code-cell">513390</td><td class="name-cell">纳指100ETF博时</td><td>暂停申购</td><td class="changed-cell">-</td><td class="changed-cell">-</td><td class="changed-cell">-</td><td class="changed-cell">-</td><td class="changed-cell">-</td><td class="changed-cell">-</td></tr>
+<tr><td class="code-cell">513500</td><td class="name-cell">标普500ETF博时</td><td>暂停申购</td><td class="changed-cell">-</td><td class="changed-cell">-</td><td class="changed-cell">-</td><td class="changed-cell">-</td><td class="changed-cell">-</td><td class="changed-cell">-</td></tr>
           </tbody>
         </table>
       </div>
@@ -4563,7 +4707,7 @@ tr:hover { background: var(--bg-card-hover); }
     <div class="card">
       <div class="card-header">
         <div class="card-title">⚡ 变动记录 · 2026-06-12 → 2026-06-15</div>
-        <span class="card-badge red">0 项变动</span>
+        <span class="card-badge red">9 项变动</span>
       </div>
       <div class="table-wrap">
         <table>
@@ -4571,7 +4715,61 @@ tr:hover { background: var(--bg-card-hover); }
             <tr><th>代码</th><th>名称</th><th>昨日限额</th><th>今日限额</th><th>申购费</th></tr>
           </thead>
           <tbody>
-<tr><td colspan="5" class="empty-row">📌 无变动 — 所有基金限额与昨日一致</td></tr>          </tbody>
+<tr class="change-row">
+                <td class="code-cell">159501</td>
+                <td class="name-cell">纳指ETF嘉实</td>
+                <td class="old-val">-</td>
+                <td class="new-val">无限制</td>
+                <td></td>
+            </tr><tr class="change-row">
+                <td class="code-cell">159612</td>
+                <td class="name-cell">标普500ETF国泰</td>
+                <td class="old-val">-</td>
+                <td class="new-val">暂停申购</td>
+                <td></td>
+            </tr><tr class="change-row">
+                <td class="code-cell">159659</td>
+                <td class="name-cell">纳斯达克100ETF招商</td>
+                <td class="old-val">-</td>
+                <td class="new-val">无限制</td>
+                <td></td>
+            </tr><tr class="change-row">
+                <td class="code-cell">159941</td>
+                <td class="name-cell">纳指ETF广发</td>
+                <td class="old-val">-</td>
+                <td class="new-val">无限制</td>
+                <td></td>
+            </tr><tr class="change-row">
+                <td class="code-cell">270042</td>
+                <td class="name-cell">广发纳斯达克100ETF联接人民币(QDII)A</td>
+                <td class="old-val">-</td>
+                <td class="new-val">10.00元</td>
+                <td>0.13%</td>
+            </tr><tr class="change-row">
+                <td class="code-cell">513100</td>
+                <td class="name-cell">纳指ETF国泰</td>
+                <td class="old-val">-</td>
+                <td class="new-val">暂停申购</td>
+                <td></td>
+            </tr><tr class="change-row">
+                <td class="code-cell">513300</td>
+                <td class="name-cell">纳斯达克ETF华夏</td>
+                <td class="old-val">-</td>
+                <td class="new-val">无限制</td>
+                <td></td>
+            </tr><tr class="change-row">
+                <td class="code-cell">513390</td>
+                <td class="name-cell">纳指100ETF博时</td>
+                <td class="old-val">-</td>
+                <td class="new-val">暂停申购</td>
+                <td></td>
+            </tr><tr class="change-row">
+                <td class="code-cell">513500</td>
+                <td class="name-cell">标普500ETF博时</td>
+                <td class="old-val">-</td>
+                <td class="new-val">暂停申购</td>
+                <td></td>
+            </tr>          </tbody>
         </table>
       </div>
     </div>
@@ -4580,7 +4778,7 @@ tr:hover { background: var(--bg-card-hover); }
   <!-- Footer -->
   <div class="footer">
     <span>数据源: fundf10.eastmoney.com · 数据库: lof_limits.db (SQLite)</span>
-    <span>生成时间: 2026-06-15 19:56:38 · 自动采集</span>
+    <span>生成时间: 2026-06-15 22:42:18 · 自动采集</span>
   </div>
 </div>
 
@@ -4607,7 +4805,7 @@ function switchTab(name) {
       data: {
         labels: ['有限额/限大额', '暂停申购', '开放无限制'],
         datasets: [{
-          data: [38, 54, 298],
+          data: [39, 58, 302],
           backgroundColor: ['rgba(255,152,0,0.8)', 'rgba(255,61,79,0.8)', 'rgba(0,230,118,0.8)'],
           borderColor: ['rgba(255,152,0,1)', 'rgba(255,61,79,1)', 'rgba(0,230,118,1)'],
           borderWidth: 2,
@@ -4653,7 +4851,7 @@ function renderTrendChart() {
         },
         {
           label: '限大额',
-          data: [30, 31, 31, 31, 31, 31, 31],
+          data: [30, 31, 31, 31, 31, 31, 32],
           borderColor: '#ff6b35',
           backgroundColor: 'rgba(255,107,53,0.1)',
           borderWidth: 2,
@@ -4664,7 +4862,7 @@ function renderTrendChart() {
         },
         {
           label: '暂停申购',
-          data: [54, 54, 54, 54, 54, 54, 54],
+          data: [54, 54, 54, 54, 54, 54, 58],
           borderColor: '#ff3d4f',
           backgroundColor: 'rgba(255,61,79,0.1)',
           borderWidth: 2,
@@ -4675,7 +4873,7 @@ function renderTrendChart() {
         },
         {
           label: '开放无限制',
-          data: [299, 298, 298, 298, 298, 298, 298],
+          data: [299, 298, 298, 298, 298, 298, 302],
           borderColor: '#00e676',
           backgroundColor: 'rgba(0,230,118,0.1)',
           borderWidth: 2,
