@@ -547,7 +547,7 @@ tr:hover { background: var(--bg-card-hover); }
     </div>
     <div class="live-indicator">
       <div class="live-dot"></div>
-      <span>LIVE · 2026-06-17 13:55:07</span>
+      <span>LIVE · 2026-06-17 15:23:51</span>
     </div>
   </div>
 
@@ -560,7 +560,7 @@ tr:hover { background: var(--bg-card-hover); }
     </div>
     <div class="kpi-card orange">
       <div class="kpi-label">有限额/限大额</div>
-      <div class="kpi-value orange">39</div>
+      <div class="kpi-value orange">38</div>
       <div class="kpi-sub">含限大额 · 可套利标的</div>
     </div>
     <div class="kpi-card red">
@@ -570,12 +570,12 @@ tr:hover { background: var(--bg-card-hover); }
     </div>
     <div class="kpi-card green">
       <div class="kpi-label">开放无限制</div>
-      <div class="kpi-value green">302</div>
+      <div class="kpi-value green">303</div>
       <div class="kpi-sub">无限额申购</div>
     </div>
     <div class="kpi-card accent">
       <div class="kpi-label">今日变动</div>
-      <div class="kpi-value accent glitch">1</div>
+      <div class="kpi-value accent glitch">2</div>
       <div class="kpi-sub">⚠️ 限额已变化！</div>
     </div>
   </div>
@@ -587,6 +587,12 @@ tr:hover { background: var(--bg-card-hover); }
       <div class="alert-title">套利机会提醒！以下基金申购限额发生变化</div>
       <div class="alert-items">
         
+            <div class="alert-item">
+                <span class="alert-code">161713</span>
+                <span class="alert-name">招商信用添利债券(LOF)A</span>
+                <span class="alert-arrow">→</span>
+                <span class="alert-new">无限制</span>
+            </div>
             <div class="alert-item">
                 <span class="alert-code">164210</span>
                 <span class="alert-name">天弘同利债券(LOF)C</span>
@@ -603,7 +609,7 @@ tr:hover { background: var(--bg-card-hover); }
     <button class="tab-btn" onclick="switchTab('detail')">📋 明细列表</button>
     <button class="tab-btn" onclick="switchTab('chart')">📈 趋势图表</button>
     <button class="tab-btn" onclick="switchTab('weekly')">📜 限额历史</button>
-    <button class="tab-btn" onclick="switchTab('changes')">⚡ 变动记录 (1)</button>
+    <button class="tab-btn" onclick="switchTab('changes')">⚡ 变动记录 (2)</button>
   </div>
 
   <!-- Tab 1: Overview -->
@@ -611,7 +617,7 @@ tr:hover { background: var(--bg-card-hover); }
     <div class="card">
       <div class="card-header">
         <div class="card-title">📊 实时总览 · 限额分布</div>
-        <span class="card-badge green">更新于 2026-06-17 13:55:07</span>
+        <span class="card-badge green">更新于 2026-06-17 15:23:51</span>
       </div>
       <div class="chart-wrap">
         <canvas id="overviewChart"></canvas>
@@ -620,7 +626,7 @@ tr:hover { background: var(--bg-card-hover); }
     <div class="card">
       <div class="card-header">
         <div class="card-title">🔍 重点关注 · 具体限额基金 (限大额 / 有数字限额)</div>
-        <span class="card-badge orange">39 只</span>
+        <span class="card-badge orange">38 只</span>
       </div>
       <div class="table-wrap">
         <table>
@@ -762,15 +768,6 @@ tr:hover { background: var(--bg-card-hover); }
               <td class="name-cell">银河通利债券(LOF)A</td>
               <td><span class="badge badge-orange">限大额</span></td>
               <td class="limit-cell">1.00万元</td>
-              <td class="num-cell">0.80%</td>
-              <td class="num-cell">0.08%</td>
-              <td class="num-cell">1.50%</td>
-            </tr>
-            <tr class="row-limited">
-              <td class="code-cell">161713</td>
-              <td class="name-cell">招商信用添利债券(LOF)A</td>
-              <td><span class="badge badge-orange">限大额</span></td>
-              <td class="limit-cell">10.00万元</td>
               <td class="num-cell">0.80%</td>
               <td class="num-cell">0.08%</td>
               <td class="num-cell">1.50%</td>
@@ -1135,14 +1132,6 @@ tr:hover { background: var(--bg-card-hover); }
             <td class="name-cell">银河通利债券(LOF)A</td>
             <td><span class="badge badge-orange">限大额 1.00万元</span></td>
             <td class="limit-cell">1.00万元</td>
-            <td class="num-cell">0.80%</td>
-            <td class="num-cell">0.08%</td>
-            <td class="num-cell">1.50%</td>
-        </tr><tr class="row-limited" data-type="row-limited">
-            <td class="code-cell">161713</td>
-            <td class="name-cell">招商信用添利债券(LOF)A</td>
-            <td><span class="badge badge-orange">限大额 10.00万元</span></td>
-            <td class="limit-cell">10.00万元</td>
             <td class="num-cell">0.80%</td>
             <td class="num-cell">0.08%</td>
             <td class="num-cell">1.50%</td>
@@ -2217,6 +2206,14 @@ tr:hover { background: var(--bg-card-hover); }
             <td class="limit-cell">无限制</td>
             <td class="num-cell">1.50%</td>
             <td class="num-cell">0.15%</td>
+            <td class="num-cell">1.50%</td>
+        </tr><tr class="row-open row-changed" data-type="row-open">
+            <td class="code-cell">161713 ⚡</td>
+            <td class="name-cell">招商信用添利债券(LOF)A</td>
+            <td><span class="badge badge-green">开放</span></td>
+            <td class="limit-cell">无限制</td>
+            <td class="num-cell">0.80%</td>
+            <td class="num-cell">0.08%</td>
             <td class="num-cell">1.50%</td>
         </tr><tr class="row-open" data-type="row-open">
             <td class="code-cell">161715</td>
@@ -4264,7 +4261,6 @@ tr:hover { background: var(--bg-card-hover); }
 <tr><td class="code-cell">161005</td><td class="name-cell">富国天惠成长混合(LOF)A</td><td>2.00万元</td><td>2.00万元</td><td>2.00万元</td><td>2.00万元</td><td>2.00万元</td><td>2.00万元</td><td>2.00万元</td></tr>
 <tr><td class="code-cell">161124</td><td class="name-cell">易方达香港小型股指数A</td><td>3000.00元</td><td>3000.00元</td><td>3000.00元</td><td>3000.00元</td><td>3000.00元</td><td>3000.00元</td><td>3000.00元</td></tr>
 <tr><td class="code-cell">161505</td><td class="name-cell">银河通利债券(LOF)A</td><td>1.00万元</td><td>1.00万元</td><td>1.00万元</td><td>1.00万元</td><td>1.00万元</td><td>1.00万元</td><td>1.00万元</td></tr>
-<tr><td class="code-cell">161713</td><td class="name-cell">招商信用添利债券(LOF)A</td><td>10.00万元</td><td>10.00万元</td><td>10.00万元</td><td>10.00万元</td><td>10.00万元</td><td>10.00万元</td><td>10.00万元</td></tr>
 <tr><td class="code-cell">161716</td><td class="name-cell">招商双债增强债券(LOF)C</td><td>500.00万元</td><td>500.00万元</td><td>500.00万元</td><td>500.00万元</td><td>500.00万元</td><td>500.00万元</td><td>500.00万元</td></tr>
 <tr><td class="code-cell">161725</td><td class="name-cell">招商中证白酒指数(LOF)A</td><td>50.00万元</td><td>50.00万元</td><td>50.00万元</td><td>50.00万元</td><td>50.00万元</td><td>50.00万元</td><td>50.00万元</td></tr>
 <tr><td class="code-cell">161729</td><td class="name-cell">招商瑞利灵活配置混合(LOF)A</td><td>100.00万元</td><td>100.00万元</td><td>100.00万元</td><td>100.00万元</td><td>100.00万元</td><td>100.00万元</td><td>100.00万元</td></tr>
@@ -4399,6 +4395,7 @@ tr:hover { background: var(--bg-card-hover); }
 <tr><td class="code-cell">161626</td><td class="name-cell">融通通福债券(LOF)A</td><td>无限制</td><td>无限制</td><td>无限制</td><td>无限制</td><td>无限制</td><td>无限制</td><td>无限制</td></tr>
 <tr><td class="code-cell">161631</td><td class="name-cell">融通人工智能指数(LOF)A</td><td>无限制</td><td>无限制</td><td>无限制</td><td>无限制</td><td>无限制</td><td>无限制</td><td>无限制</td></tr>
 <tr><td class="code-cell">161706</td><td class="name-cell">招商优质成长混合(LOF)</td><td>无限制</td><td>无限制</td><td>无限制</td><td>无限制</td><td>无限制</td><td>无限制</td><td>无限制</td></tr>
+<tr><td class="code-cell">161713</td><td class="name-cell">招商信用添利债券(LOF)A</td><td>无限制</td><td class="changed-cell">10.00万元</td><td class="changed-cell">10.00万元</td><td class="changed-cell">10.00万元</td><td class="changed-cell">10.00万元</td><td class="changed-cell">10.00万元</td><td class="changed-cell">10.00万元</td></tr>
 <tr><td class="code-cell">161715</td><td class="name-cell">招商大宗商品(LOF)</td><td>无限制</td><td>无限制</td><td>无限制</td><td>无限制</td><td>无限制</td><td>无限制</td><td>无限制</td></tr>
 <tr><td class="code-cell">161720</td><td class="name-cell">招商中证全指证券公司指数(LOF)A</td><td>无限制</td><td>无限制</td><td>无限制</td><td>无限制</td><td>无限制</td><td>无限制</td><td>无限制</td></tr>
 <tr><td class="code-cell">161722</td><td class="name-cell">招商丰泰混合(LOF)</td><td>无限制</td><td>无限制</td><td>无限制</td><td>无限制</td><td>无限制</td><td>无限制</td><td>无限制</td></tr>
@@ -4659,7 +4656,7 @@ tr:hover { background: var(--bg-card-hover); }
     <div class="card">
       <div class="card-header">
         <div class="card-title">⚡ 变动记录 · 2026-06-16 → 2026-06-17</div>
-        <span class="card-badge red">1 项变动</span>
+        <span class="card-badge red">2 项变动</span>
       </div>
       <div class="table-wrap">
         <table>
@@ -4668,6 +4665,12 @@ tr:hover { background: var(--bg-card-hover); }
           </thead>
           <tbody>
 <tr class="change-row">
+                <td class="code-cell">161713</td>
+                <td class="name-cell">招商信用添利债券(LOF)A</td>
+                <td class="old-val">-</td>
+                <td class="new-val">无限制</td>
+                <td>0.08%</td>
+            </tr><tr class="change-row">
                 <td class="code-cell">164210</td>
                 <td class="name-cell">天弘同利债券(LOF)C</td>
                 <td class="old-val">-</td>
@@ -4682,7 +4685,7 @@ tr:hover { background: var(--bg-card-hover); }
   <!-- Footer -->
   <div class="footer">
     <span>数据源: fundf10.eastmoney.com · 数据库: lof_limits.db (SQLite)</span>
-    <span>生成时间: 2026-06-17 13:55:07 · 自动采集</span>
+    <span>生成时间: 2026-06-17 15:23:51 · 自动采集</span>
   </div>
 </div>
 
@@ -4709,7 +4712,7 @@ function switchTab(name) {
       data: {
         labels: ['有限额/限大额', '暂停申购', '开放无限制'],
         datasets: [{
-          data: [39, 58, 302],
+          data: [38, 58, 303],
           backgroundColor: ['rgba(255,152,0,0.8)', 'rgba(255,61,79,0.8)', 'rgba(0,230,118,0.8)'],
           borderColor: ['rgba(255,152,0,1)', 'rgba(255,61,79,1)', 'rgba(0,230,118,1)'],
           borderWidth: 2,
@@ -4755,7 +4758,7 @@ function renderTrendChart() {
         },
         {
           label: '限大额',
-          data: [31, 31, 31, 31, 32, 32, 32],
+          data: [31, 31, 31, 31, 32, 32, 31],
           borderColor: '#ff6b35',
           backgroundColor: 'rgba(255,107,53,0.1)',
           borderWidth: 2,
@@ -4777,7 +4780,7 @@ function renderTrendChart() {
         },
         {
           label: '开放无限制',
-          data: [298, 298, 298, 298, 302, 302, 302],
+          data: [298, 298, 298, 298, 302, 302, 303],
           borderColor: '#00e676',
           backgroundColor: 'rgba(0,230,118,0.1)',
           borderWidth: 2,
