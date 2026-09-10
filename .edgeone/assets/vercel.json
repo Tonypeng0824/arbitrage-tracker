@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "outputDirectory": ".",
+  "buildCommand": "echo 'static site, no build needed'",
+  "devCommand": "python -m http.server 3000",
+  "installCommand": "echo 'no install needed'",
+  "framework": null,
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/$1" }
+  ]
+}
